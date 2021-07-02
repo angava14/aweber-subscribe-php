@@ -39,9 +39,9 @@ if(!empty($_REQUEST['name']) && !empty($_REQUEST['email'])){
         $controller->addSubDB($data);
         file_put_contents("logs.log", PHP_EOL . $data[1].' - ' . $date. ' ' . $fecha . ' - (Agregado exitosamente' .  print_r($createSub,true) . ' )',FILE_APPEND);
     }
-        header('Location: https://localhost/ideaware');
+        header('Location: https://localhost/aweber-subscribe-php/');
 }else{
-        header('Location: https://localhost/ideaware?error=true');
+        header('Location: https://localhost/aweber-subscribe-php/?error=true');
 }
     
 ?>
