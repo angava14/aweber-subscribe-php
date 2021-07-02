@@ -13,6 +13,7 @@
             $this->expectException(InvalidArgumentException::class);
             $this->op->addSubDB(null);
         }
+
     }
 
 ?>

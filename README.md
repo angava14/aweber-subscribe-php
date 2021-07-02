@@ -14,3 +14,8 @@ The requirements are in composer.json. Install them using composer:
 Browse to
 
 https://localhost/aweber-subscribe-php
+
+## For Unit Testing
+Open shell at project folder and type:
+
+`./vendor/bin/phpunit tests`

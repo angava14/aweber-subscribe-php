@@ -188,16 +188,23 @@ require_once ('db.class.php');
           throw new InvalidArgumentException('Invalid parameters');
         }
 
-        $query =  "INSERT INTO subscribers (name, email, date, time, ip, url) VALUES ('".$data[0]."','".$data[1]."', '".$data[4]."', '".$data[5]."', '".$data[2]."' , '".$data[3]."')" ;
-        $query2 = "SELECT id FROM subscribers WHERE email = '".$data[1]."'";
-      
-        $this->connect();
-        $result1 = $this->execute($query);
-        $result2 = $this->execute($query2);
-        $result2 = $result2->fetch_assoc();
-        $query = "INSERT INTO tag (subscriber_id, tag) VALUES ('".$result2['id']."' , 'test_new_sub')";
-        $result = $this->execute($query);
-        $this->disconnect();
+        try{
+          $query =  "INSERT INTO subscribers (name, email, date, time, ip, url) VALUES ('".$data[0]."','".$data[1]."', '".$data[4]."', '".$data[5]."', '".$data[2]."' , '".$data[3]."')" ;
+          $query2 = "SELECT id FROM subscribers WHERE email = '".$data[1]."'";
+        
+          $this->connect();
+          $result1 = $this->execute($query);
+          $result2 = $this->execute($query2);
+          $result2 = $result2->fetch_assoc();
+          $query = "INSERT INTO tag (subscriber_id, tag) VALUES ('".$result2['id']."' , 'test_new_sub')";
+          $result = $this->execute($query);
+          $this->disconnect();
+          return $result;
+        }catch (Exception $e){
+          echo $e;
+          return $e ;
+        }
+
     }
 
     function updateSubDB($data){ // Function to update sub in DB and create new tag if necessary
@@ -206,22 +213,29 @@ require_once ('db.class.php');
           throw new InvalidArgumentException('Invalid parameters');
         }
 
-        $query =  "UPDATE subscribers SET name = '".$data[0]."', date = '".$data[4]."' , time = '".$data[5]."', ip = '".$data[2]."', url = '".$data[3]."'  WHERE email = '".$data[1]."'" ;
-        $query2 = "SELECT id FROM subscribers WHERE email = '".$data[1]."'";
-       
-        $this->connect();
-        $result1 = $this->execute($query);
-        $result2 = $this->execute($query2);
-        $result2 = $result2->fetch_assoc();
-        $querytag = "SELECT id FROM tag WHERE subscriber_id = '".$result2['id']."' AND tag ='test_existing_sub'";
-        $result = $this->execute($querytag);
-       
-        if($result->num_rows == 0){
-          $query = "INSERT INTO tag (subscriber_id, tag) VALUES ('".$result2['id']."' , 'test_existing_sub')";
+        try{
+          $query =  "UPDATE subscribers SET name = '".$data[0]."', date = '".$data[4]."' , time = '".$data[5]."', ip = '".$data[2]."', url = '".$data[3]."'  WHERE email = '".$data[1]."'" ;
+          $query2 = "SELECT id FROM subscribers WHERE email = '".$data[1]."'";
+         
+          $this->connect();
+          $result1 = $this->execute($query);
+          $result2 = $this->execute($query2);
+          $result2 = $result2->fetch_assoc();
+          $querytag = "SELECT id FROM tag WHERE subscriber_id = '".$result2['id']."' AND tag ='test_existing_sub'";
+          $result = $this->execute($querytag);
+         
+          if($result->num_rows == 0){
+            $query = "INSERT INTO tag (subscriber_id, tag) VALUES ('".$result2['id']."' , 'test_existing_sub')";
+          }
+          
+          $result = $this->execute($query);
+          $this->disconnect();
+          return $result ; 
+        }catch (Exception $e){
+          echo $e;
+          return $e ; 
         }
-        
-        $result = $this->execute($query);
-        $this->disconnect();
+
     }
 
   }
