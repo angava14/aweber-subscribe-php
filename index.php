@@ -35,7 +35,12 @@
 </body>
 </html>
 
-<script type="application/javascript"> /* Token Auto-Refresh after every 30 segs*/
+<script type="application/javascript"> /* Token Auto-Refresh after every 60 segs*/
+
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open( "GET", 'updateToken.php', false ); 
+      xmlHttp.send( null );
+
     var intervalId = window.setInterval(function(){
       var xmlHttp = new XMLHttpRequest();
       xmlHttp.open( "GET", 'updateToken.php', false ); 
