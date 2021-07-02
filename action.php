@@ -8,7 +8,9 @@
     $data[] = $_REQUEST['email'];
     $politicas = $_REQUEST['acepto_terminos'];
 
-if(!empty($_REQUEST['name']) && !empty($_REQUEST['email'])){ // Checking if name and emails were submitted in the form
+
+if(!empty($_REQUEST['name']) && !empty($_REQUEST['email']) && validate_email($_REQUEST['email']) != false){ 
+    // Checking if name and emails were submitted in the form correctly
 
 
     if($politicas == "on"){
@@ -44,4 +46,8 @@ if(!empty($_REQUEST['name']) && !empty($_REQUEST['email'])){ // Checking if name
         header('Location: https://localhost/aweber-subscribe-php/?error=true');
 }
     
+function validate_email($email) {
+    return (preg_match("/(@.*@)|(\.\.)|(@\.)|(\.@)|(^\.)/", $email) || !preg_match("/^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/", $email)) ? false : true;
+}
+
 ?>
