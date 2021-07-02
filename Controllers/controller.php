@@ -6,6 +6,10 @@ require_once ('db.class.php');
 
     class Controller extends Database{
 
+    public function __constructor(){
+
+    }
+
     function getClient(){ // Function to get the ClientID
 
       // Create a Guzzle client
@@ -29,7 +33,10 @@ require_once ('db.class.php');
 
     function getlist($clientid){ // Function to get ListID  based on ClientID - (Free Account only has 1 list)
         
-  
+        if($clientid==null || !is_numeric($clientid)){
+          throw new InvalidArgumentException('Invalid Account id');
+        }
+
         // Create a Guzzle client
         $client = new GuzzleHttp\Client();
         // Load credentials
@@ -51,6 +58,10 @@ require_once ('db.class.php');
     }
 
     function addSub( $clientid , $list , $data){ // Function to add new Sub 
+
+        if($clientid == null || $list == null || $data == null){
+          throw new InvalidArgumentException('Invalid parameters');
+        }
 
         // Create a Guzzle client
         $client = new GuzzleHttp\Client();
@@ -98,6 +109,10 @@ require_once ('db.class.php');
 
     function updateSub( $clientid , $list , $data){ // Function to update Sub based on email
 
+      if($clientid == null || $list == null || $data == null){
+        throw new InvalidArgumentException('Invalid parameters');
+      }
+
       // Create a Guzzle client
       $client = new GuzzleHttp\Client();
 
@@ -141,6 +156,10 @@ require_once ('db.class.php');
 
     function findSubInList($accountId , $listId , $email){ // Function to check if Sub is already created based on email
 
+      if($accountId == null || $listId == null || $email == null){
+        throw new InvalidArgumentException('Invalid parameters');
+      }
+
       // Create a Guzzle client
       $client = new GuzzleHttp\Client();
       // Load credentials
@@ -165,6 +184,10 @@ require_once ('db.class.php');
 
     function addSubDB($data){ // Function to insert a new sub in DB and create his tag relation
 
+        if($data == null){
+          throw new InvalidArgumentException('Invalid parameters');
+        }
+
         $query =  "INSERT INTO subscribers (name, email, date, time, ip, url) VALUES ('".$data[0]."','".$data[1]."', '".$data[4]."', '".$data[5]."', '".$data[2]."' , '".$data[3]."')" ;
         $query2 = "SELECT id FROM subscribers WHERE email = '".$data[1]."'";
       
@@ -179,6 +202,10 @@ require_once ('db.class.php');
 
     function updateSubDB($data){ // Function to update sub in DB and create new tag if necessary
  
+        if($data == null){
+          throw new InvalidArgumentException('Invalid parameters');
+        }
+
         $query =  "UPDATE subscribers SET name = '".$data[0]."', date = '".$data[4]."' , time = '".$data[5]."', ip = '".$data[2]."', url = '".$data[3]."'  WHERE email = '".$data[1]."'" ;
         $query2 = "SELECT id FROM subscribers WHERE email = '".$data[1]."'";
        

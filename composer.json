@@ -11,5 +11,13 @@
       "ext-json": "*",
       "ext-hash": "*",
       "league/oauth2-client": "~2.4.1"
+  },
+  "autoload":{
+    "classmap":[
+      "Controllers/"
+    ]
+  },
+  "require-dev": {
+    "phpunit/phpunit": "9"
   }
 }
