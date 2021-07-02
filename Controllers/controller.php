@@ -163,7 +163,7 @@ require_once ('db.class.php');
       return $body;
     }
 
-    function addSubDB($data){
+    function addSubDB($data){ // Function to insert a new sub in DB and create his tag relation
 
         $query =  "INSERT INTO subscribers (name, email, date, time, ip, url) VALUES ('".$data[0]."','".$data[1]."', '".$data[4]."', '".$data[5]."', '".$data[2]."' , '".$data[3]."')" ;
         $query2 = "SELECT id FROM subscribers WHERE email = '".$data[1]."'";
@@ -177,8 +177,8 @@ require_once ('db.class.php');
         $this->disconnect();
     }
 
-    function updateSubDB($data){
-
+    function updateSubDB($data){ // Function to update sub in DB and create new tag if necessary
+ 
         $query =  "UPDATE subscribers SET name = '".$data[0]."', date = '".$data[4]."' , time = '".$data[5]."', ip = '".$data[2]."', url = '".$data[3]."'  WHERE email = '".$data[1]."'" ;
         $query2 = "SELECT id FROM subscribers WHERE email = '".$data[1]."'";
        

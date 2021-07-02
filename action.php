@@ -8,7 +8,7 @@
     $data[] = $_REQUEST['email'];
     $politicas = $_REQUEST['acepto_terminos'];
 
-if(!empty($_REQUEST['name']) && !empty($_REQUEST['email'])){
+if(!empty($_REQUEST['name']) && !empty($_REQUEST['email'])){ // Checking if name and emails were submitted in the form
 
 
     if($politicas == "on"){
@@ -26,17 +26,17 @@ if(!empty($_REQUEST['name']) && !empty($_REQUEST['email'])){
     $findSub = $controller->findSubInList($clientid , $list, $data[1]); //Find if sub exist
 
 
-    if( isset($findSub['entries'][0])){
+    if( isset($findSub['entries'][0])){ // if SUB exist, we update existing Subscriber
         $userid = $findSub['entries'][0]['id'];
-        $updateSub = $controller->updateSub($clientid , $list, $data);
-        $controller->updateSubDB($data);
+        $updateSub = $controller->updateSub($clientid , $list, $data); // Update in AWeber
+        $controller->updateSubDB($data); // Update in DB
         $date  = date('m/d/y');
         $fecha = date('H:i:s');
         file_put_contents("logs.log", PHP_EOL . $data[1].' - ' . $date. ' ' . $fecha . ' - (Agregado exitosamente' .  print_r($updateSub,true) . ' )',FILE_APPEND);
-    }else{
+    }else{ // if SUB dont exist, we create a new one
         $date  = date('m/d/y');
-        $createSub = $controller->addSub($clientid , $list, $data);
-        $controller->addSubDB($data);
+        $createSub = $controller->addSub($clientid , $list, $data); // Save in AWeber
+        $controller->addSubDB($data); //Save in DB
         file_put_contents("logs.log", PHP_EOL . $data[1].' - ' . $date. ' ' . $fecha . ' - (Agregado exitosamente' .  print_r($createSub,true) . ' )',FILE_APPEND);
     }
         header('Location: https://localhost/aweber-subscribe-php/');
